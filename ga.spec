@@ -1,10 +1,15 @@
 Name:    ga
 Version: 5.1.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: http://www.emsl.pnl.gov/docs/global/download/%{name}-5-1-1.tgz
 URL: http://www.emsl.pnl.gov/docs/global
+%if 0%{?rhel} <= 6
+ExclusiveArch: i386 x86_64
+%else
+ExclusiveArch: i586 x86_64
+%endif
 BuildRequires: openmpi-devel, mpich2-devel, gcc-c++, gcc-gfortran, hwloc-devel
 BuildRequires: libibverbs-devel, atlas-devel, openssh-clients, dos2unix
 BuildRoot: %{_tmppath}/%{name}-%{version}
@@ -114,6 +119,9 @@ export MPI_COMPILER_NAME=openmpi
 %{_openmpi_load}
 %doInstall
 %{_openmpi_unload}
+
+find %{buildroot} -type f -name "*.la" -exec rm -f {} \;
+
 mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/sysctl.d
 echo 'kernel.shmmax = 134217728' > $RPM_BUILD_ROOT/%{_sysconfdir}/sysctl.d/armci.conf
 dos2unix %{name}-%{ga_version}/COPYRIGHT
@@ -148,12 +156,15 @@ rm -rf %{buildroot}
 %files %{1}-static \
 %doc %{name}-%{ga_version}/COPYRIGHT \
 %{_libdir}/%{1}/lib/lib*.a \
-%{_libdir}/%{1}/lib/lib*.la
 
 %ga_files mpich2
 %ga_files openmpi
 
 %changelog
+* Tue May 14 2013 David Brown <david.brown@pnnl.gov> - 5.1.1-2
+- Add exclusive arch for EPEL.
+- And lib*.la files are bad too.
+
 * Wed May 1 2013 David Brown <david.brown@pnnl.gov> - 5.1.1-1
 - Update to upstream version
 - fixed file locations and clean up rpmlint
