@@ -1,15 +1,11 @@
 Name:    ga
 Version: 5.1.1
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: http://www.emsl.pnl.gov/docs/global/download/%{name}-5-1-1.tgz
 URL: http://www.emsl.pnl.gov/docs/global
-%if 0%{?rhel} <= 6
-ExclusiveArch: i386 x86_64
-%else
-ExclusiveArch: i586 x86_64
-%endif
+ExclusiveArch: i686 x86_64
 BuildRequires: openmpi-devel, mpich2-devel, gcc-c++, gcc-gfortran, hwloc-devel
 BuildRequires: libibverbs-devel, atlas-devel, openssh-clients, dos2unix
 BuildRoot: %{_tmppath}/%{name}-%{version}
@@ -161,6 +157,9 @@ rm -rf %{buildroot}
 %ga_files openmpi
 
 %changelog
+* Tue May 21 2013 David Brown <david.brown@pnnl.gov> - 5.1.1-3
+- modify exclusive arch some more (964424, 964946)
+
 * Tue May 14 2013 David Brown <david.brown@pnnl.gov> - 5.1.1-2
 - Add exclusive arch for EPEL.
 - And lib*.la files are bad too.
