@@ -1,6 +1,6 @@
 Name:    ga
 Version: 5.1.1
-Release: 3%{?dist}
+Release: 4%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: http://www.emsl.pnl.gov/docs/global/download/%{name}-5-1-1.tgz
@@ -157,6 +157,9 @@ rm -rf %{buildroot}
 %ga_files openmpi
 
 %changelog
+* Mon July 15 2013 David Brown <david.brown@pnnl.gov> - 5.1.1-4
+- Rebuild for updated openmpi
+
 * Tue May 21 2013 David Brown <david.brown@pnnl.gov> - 5.1.1-3
 - modify exclusive arch some more (964424, 964946)
 
