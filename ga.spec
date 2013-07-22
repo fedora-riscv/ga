@@ -1,6 +1,6 @@
 Name:    ga
 Version: 5.1.1
-Release: 5%{?dist}
+Release: 6%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: http://www.emsl.pnl.gov/docs/global/download/%{name}-5-1-1.tgz
@@ -48,6 +48,8 @@ Obsoletes: %{name}-mpich2 < 5.1.1-4
 Summary: Global Arrays Toolkit for MPICH Development
 Requires: scalapack-mpich-devel, blacs-mpich-devel, mpich-devel
 Requires: atlas-devel, %{name}-common = %{version}, %{name}-mpich = %{version}
+Provides: %{name}-mpich2-devel = %{version}-%{release}
+Obsoletes: %{name}-mpich2-devel < 5.1.1-4
 %description mpich-devel
 %{ga_desc_base}
 - Development Software against MPICH.
@@ -55,6 +57,8 @@ Requires: atlas-devel, %{name}-common = %{version}, %{name}-mpich = %{version}
 Summary: Global Arrays Toolkit for MPICH Static Libraries
 Requires: scalapack-mpich-devel, blacs-mpich-devel, mpich-devel
 Requires: atlas-devel, %{name}-common = %{version}, %{name}-mpich = %{version}
+Provides: %{name}-mpich2-static = %{version}-%{release}
+Obsoletes: %{name}-mpich2-static < 5.1.1-4
 %description mpich-static
 %{ga_desc_base}
 - Static Libraries against MPICH.
@@ -181,6 +185,9 @@ rm -rf %{buildroot}
 %ga_files openmpi
 
 %changelog
+* Mon Jul 22 2013 David Brown <david.brown@pnnl.gov> - 5.1.1-6
+- forgot obsoletes and provides for sub packages as well.
+
 * Mon Jul 22 2013 David Brown <david.brown@pnnl.gov> - 5.1.1-5
 - forgot about obsoletes and provides for new mpich packages.
 
