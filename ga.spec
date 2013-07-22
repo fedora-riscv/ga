@@ -1,6 +1,6 @@
 Name:    ga
 Version: 5.1.1
-Release: 4%{?dist}
+Release: 5%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: http://www.emsl.pnl.gov/docs/global/download/%{name}-5-1-1.tgz
@@ -35,33 +35,55 @@ BuildArch: noarch
 %{ga_desc_base}
 - Global Arrays Common Files.
 
-%define ga_mpi_common() \
-%package %{1} \
-Summary: Global Arrays Toolkit for %{1} \
-BuildRequires: scalapack-%{1}-devel, blacs-%{1}-devel \
-Requires: %{name}-common = %{version} \
-%description %{1} \
-%{ga_desc_base} \
-- Libraries against %{1}. \
-%package %{1}-devel \
-Summary: Global Arrays Toolkit for %{1} Development \
-Requires: scalapack-%{1}-devel, blacs-%{1}-devel, %{1}-devel \
-Requires: atlas-devel, %{name}-common = %{version}, %{name}-%{1} = %{version} \
-%description %{1}-devel \
-%{ga_desc_base} \
-- Development Software against %{1}. \
-%package %{1}-static \
-Summary: Global Arrays Toolkit for %{1} Static Libraries \
-Requires: scalapack-%{1}-devel, blacs-%{1}-devel, %{1}-devel \
-Requires: atlas-devel, %{name}-common = %{version}, %{name}-%{1} = %{version} \
-%description %{1}-static \
-%{ga_desc_base} \
-- Static Libraries against %{1}. \
-%post %{1} -p /sbin/ldconfig \
-%postun %{1} -p /sbin/ldconfig
+%package mpich
+Summary: Global Arrays Toolkit for MPICH
+BuildRequires: scalapack-mpich-devel, blacs-mpich-devel
+Requires: %{name}-common = %{version}
+Provides: %{name}-mpich2 = %{version}-%{release}
+Obsoletes: %{name}-mpich2 < 5.1.1-4
+%description mpich
+%{ga_desc_base}
+- Libraries against MPICH.
+%package mpich-devel
+Summary: Global Arrays Toolkit for MPICH Development
+Requires: scalapack-mpich-devel, blacs-mpich-devel, mpich-devel
+Requires: atlas-devel, %{name}-common = %{version}, %{name}-mpich = %{version}
+%description mpich-devel
+%{ga_desc_base}
+- Development Software against MPICH.
+%package mpich-static
+Summary: Global Arrays Toolkit for MPICH Static Libraries
+Requires: scalapack-mpich-devel, blacs-mpich-devel, mpich-devel
+Requires: atlas-devel, %{name}-common = %{version}, %{name}-mpich = %{version}
+%description mpich-static
+%{ga_desc_base}
+- Static Libraries against MPICH.
+%post mpich -p /sbin/ldconfig
+%postun mpich -p /sbin/ldconfig
 
-%ga_mpi_common mpich
-%ga_mpi_common openmpi
+%package openmpi
+Summary: Global Arrays Toolkit for OpenMPI
+BuildRequires: scalapack-openmpi-devel, blacs-openmpi-devel
+Requires: %{name}-common = %{version}
+%description openmpi
+%{ga_desc_base}
+- Libraries against OpenMPI.
+%package openmpi-devel
+Summary: Global Arrays Toolkit for OpenMPI Development
+Requires: scalapack-openmpi-devel, blacs-openmpi-devel, openmpi-devel
+Requires: atlas-devel, %{name}-common = %{version}, %{name}-openmpi = %{version}
+%description openmpi-devel
+%{ga_desc_base}
+- Development Software against OpenMPI.
+%package openmpi-static
+Summary: Global Arrays Toolkit for OpenMPI Static Libraries
+Requires: scalapack-openmpi-devel, blacs-openmpi-devel, openmpi-devel
+Requires: atlas-devel, %{name}-common = %{version}, %{name}-openmpi = %{version}
+%description openmpi-static
+%{ga_desc_base}
+- Static Libraries against OpenMPI.
+%post openmpi -p /sbin/ldconfig
+%postun openmpi -p /sbin/ldconfig
 
 %define ga_version 5-1-1
 
@@ -159,6 +181,9 @@ rm -rf %{buildroot}
 %ga_files openmpi
 
 %changelog
+* Mon Jul 22 2013 David Brown <david.brown@pnnl.gov> - 5.1.1-5
+- forgot about obsoletes and provides for new mpich packages.
+
 * Mon Jul 15 2013 David Brown <david.brown@pnnl.gov> - 5.1.1-4
 - Rebuild for updated openmpi
 - resolved issues with doBuild function to proper define
