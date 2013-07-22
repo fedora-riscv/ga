@@ -60,19 +60,19 @@ Requires: atlas-devel, %{name}-common = %{version}, %{name}-%{1} = %{version} \
 %post %{1} -p /sbin/ldconfig \
 %postun %{1} -p /sbin/ldconfig
 
-%ga_mpi_common mpich2
+%ga_mpi_common mpich
 %ga_mpi_common openmpi
 
 %define ga_version 5-1-1
 
 %prep
 %setup -q -c -n %{name}-%{version}
-for i in mpich2 openmpi; do
+for i in mpich openmpi; do
   cp -a %{name}-%{ga_version} %{name}-%{version}-$i
 done
 
 %build
-%define doBuild() \
+%define doBuild \
 export LIBS="-lscalapack -lmpiblacs -lmpiblacsCinit -lmpiblacsF77init -L%{_libdir}/atlas -lf77blas -llapack -lm" ; \
 cd %{name}-%{version}-$MPI_COMPILER_NAME ; \
 %configure \\\
@@ -85,18 +85,20 @@ cd %{name}-%{version}-$MPI_COMPILER_NAME ; \
   --enable-static \\\
   --enable-cxx \\\
   --enable-f77 \\\
-  %{?1} ; \
+  $GA_CONFIGURE_OPTIONS ; \
 %{__make} %{?__smp_mflags} ; \
 cd ..
 
-export MPI_COMPILER_NAME=mpich2
-%{_mpich2_load}
+export MPI_COMPILER_NAME=mpich
+export GA_CONFIGURE_OPTIONS=""
+%{_mpich_load}
 %doBuild
-%{_mpich2_unload}
+%{_mpich_unload}
 
 export MPI_COMPILER_NAME=openmpi
+export GA_CONFIGURE_OPTIONS="--with-openib"
 %{_openmpi_load}
-%doBuild --with-openib
+%doBuild
 %{_openmpi_unload}
 
 %install
@@ -106,10 +108,10 @@ DESTDIR=$RPM_BUILD_ROOT make install ; \
 cd ..
 
 rm -rf $RPM_BUILD_ROOT
-export MPI_COMPILER_NAME=mpich2
-%{_mpich2_load}
+export MPI_COMPILER_NAME=mpich
+%{_mpich_load}
 %doInstall
-%{_mpich2_unload}
+%{_mpich_unload}
 
 export MPI_COMPILER_NAME=openmpi
 %{_openmpi_load}
@@ -124,11 +126,11 @@ dos2unix %{name}-%{ga_version}/COPYRIGHT
 
 %check
 %if %{?do_test}0
-%{_mpich2_load}
-cd %{name}-%{version}-mpich2
+%{_mpich_load}
+cd %{name}-%{version}-mpich
 make check
 cd ..
-%{_mpich2_unload}
+%{_mpich_unload}
 %endif
 
 %clean
@@ -153,12 +155,14 @@ rm -rf %{buildroot}
 %doc %{name}-%{ga_version}/COPYRIGHT \
 %{_libdir}/%{1}/lib/lib*.a \
 
-%ga_files mpich2
+%ga_files mpich
 %ga_files openmpi
 
 %changelog
-* Mon July 15 2013 David Brown <david.brown@pnnl.gov> - 5.1.1-4
+* Mon Jul 15 2013 David Brown <david.brown@pnnl.gov> - 5.1.1-4
 - Rebuild for updated openmpi
+- resolved issues with doBuild function to proper define
+- also renamed mpich2 to mpich
 
 * Tue May 21 2013 David Brown <david.brown@pnnl.gov> - 5.1.1-3
 - modify exclusive arch some more (964424, 964946)
