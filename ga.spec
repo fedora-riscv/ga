@@ -1,6 +1,6 @@
 Name:    ga
 Version: 5.1.1
-Release: 6%{?dist}
+Release: 7%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: http://www.emsl.pnl.gov/docs/global/download/%{name}-5-1-1.tgz
@@ -185,6 +185,9 @@ rm -rf %{buildroot}
 %ga_files openmpi
 
 %changelog
+* Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.1.1-7
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
+
 * Mon Jul 22 2013 David Brown <david.brown@pnnl.gov> - 5.1.1-6
 - forgot obsoletes and provides for sub packages as well.
 
