@@ -1,6 +1,6 @@
 Name:    ga
 Version: 5.1.1
-Release: 7%{?dist}
+Release: 8%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: http://www.emsl.pnl.gov/docs/global/download/%{name}-5-1-1.tgz
@@ -98,8 +98,14 @@ for i in mpich openmpi; do
 done
 
 %build
+%if 0%{?fedora}%{?rhel} > 19
+%define atlas_libs -lsatlas
+%else
+%define atlas_libs -lf77blas -llapack
+%endif
+
 %define doBuild \
-export LIBS="-lscalapack -lmpiblacs -lmpiblacsCinit -lmpiblacsF77init -L%{_libdir}/atlas -lf77blas -llapack -lm" ; \
+export LIBS="-lscalapack -lmpiblacs -lmpiblacsCinit -lmpiblacsF77init -L%{_libdir}/atlas %{atlas_libs} -lm" ; \
 cd %{name}-%{version}-$MPI_COMPILER_NAME ; \
 %configure \\\
   --bindir=$MPI_BIN \\\
@@ -185,6 +191,10 @@ rm -rf %{buildroot}
 %ga_files openmpi
 
 %changelog
+* Mon Sep 23 2013 David Brown <david.brown@pnnl.gov> - 5.1.1-8
+- Rebuild for updated atlas.
+- Fix atlas libs since they changed things
+
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.1.1-7
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
