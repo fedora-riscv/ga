@@ -1,11 +1,12 @@
 Name:    ga
-Version: 5.1.1
-Release: 8%{?dist}
+Version: 5.3b
+Release: 1%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
-Source: http://www.emsl.pnl.gov/docs/global/download/%{name}-5-1-1.tgz
-URL: http://www.emsl.pnl.gov/docs/global
-ExclusiveArch: i686 x86_64
+Source: http://hpc.pnl.gov/globalarrays/download/%{name}-5-3b.tgz
+Patch0: ga-5-format-security.patch
+URL: http://hpc.pnl.gov/globalarrays/
+ExclusiveArch: %{ix86} x86_64
 BuildRequires: openmpi-devel, mpich2-devel, gcc-c++, gcc-gfortran, hwloc-devel
 BuildRequires: libibverbs-devel, atlas-devel, openssh-clients, dos2unix
 BuildRoot: %{_tmppath}/%{name}-%{version}
@@ -40,7 +41,7 @@ Summary: Global Arrays Toolkit for MPICH
 BuildRequires: scalapack-mpich-devel, blacs-mpich-devel
 Requires: %{name}-common = %{version}
 Provides: %{name}-mpich2 = %{version}-%{release}
-Obsoletes: %{name}-mpich2 < 5.1.1-4
+Obsoletes: %{name}-mpich2 < %{version}-%{release}
 %description mpich
 %{ga_desc_base}
 - Libraries against MPICH.
@@ -49,7 +50,7 @@ Summary: Global Arrays Toolkit for MPICH Development
 Requires: scalapack-mpich-devel, blacs-mpich-devel, mpich-devel
 Requires: atlas-devel, %{name}-common = %{version}, %{name}-mpich = %{version}
 Provides: %{name}-mpich2-devel = %{version}-%{release}
-Obsoletes: %{name}-mpich2-devel < 5.1.1-4
+Obsoletes: %{name}-mpich2-devel < %{version}-%{release}
 %description mpich-devel
 %{ga_desc_base}
 - Development Software against MPICH.
@@ -58,7 +59,7 @@ Summary: Global Arrays Toolkit for MPICH Static Libraries
 Requires: scalapack-mpich-devel, blacs-mpich-devel, mpich-devel
 Requires: atlas-devel, %{name}-common = %{version}, %{name}-mpich = %{version}
 Provides: %{name}-mpich2-static = %{version}-%{release}
-Obsoletes: %{name}-mpich2-static < 5.1.1-4
+Obsoletes: %{name}-mpich2-static < %{version}-%{release}
 %description mpich-static
 %{ga_desc_base}
 - Static Libraries against MPICH.
@@ -89,10 +90,13 @@ Requires: atlas-devel, %{name}-common = %{version}, %{name}-openmpi = %{version}
 %post openmpi -p /sbin/ldconfig
 %postun openmpi -p /sbin/ldconfig
 
-%define ga_version 5-1-1
+%define ga_version 5-3b
 
 %prep
 %setup -q -c -n %{name}-%{version}
+pushd %{name}-%{ga_version}
+%patch0 -p1
+popd
 for i in mpich openmpi; do
   cp -a %{name}-%{ga_version} %{name}-%{version}-$i
 done
@@ -191,6 +195,11 @@ rm -rf %{buildroot}
 %ga_files openmpi
 
 %changelog
+* Mon Jan 27 2014 David Brown <david.brown@pnnl.gov> - 5.3b-1
+- Update to upstream version
+- Fix exclusive arch to match documentation
+- add patch for format security fixes (1037075)
+
 * Mon Sep 23 2013 David Brown <david.brown@pnnl.gov> - 5.1.1-8
 - Rebuild for updated atlas.
 - Fix atlas libs since they changed things
