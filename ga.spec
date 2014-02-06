@@ -1,6 +1,6 @@
 Name:    ga
 Version: 5.3b
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: http://hpc.pnl.gov/globalarrays/download/%{name}-5-3b.tgz
@@ -9,7 +9,7 @@ URL: http://hpc.pnl.gov/globalarrays/
 ExclusiveArch: %{ix86} x86_64
 BuildRequires: openmpi-devel, mpich2-devel, gcc-c++, gcc-gfortran, hwloc-devel
 BuildRequires: libibverbs-devel, atlas-devel, openssh-clients, dos2unix
-BuildRoot: %{_tmppath}/%{name}-%{version}
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %define ga_desc_base \
 The Global Arrays (GA) toolkit provides an efficient and portable \
@@ -102,7 +102,13 @@ for i in mpich openmpi; do
 done
 
 %build
-%if 0%{?fedora}%{?rhel} > 19
+%if 0%{?fedora}%{?rhel} == 19
+%define atlas_libs -lsatlas
+%endif
+%if 0%{?fedora}%{?rhel} == 20
+%define atlas_libs -latlas -lcblas -lclapack -lf77blas -llapack -lptcblas -lptf77blas
+%endif
+%if 0%{?fedora}%{?rhel} == 21
 %define atlas_libs -lsatlas
 %else
 %define atlas_libs -lf77blas -llapack
@@ -195,6 +201,10 @@ rm -rf %{buildroot}
 %ga_files openmpi
 
 %changelog
+* Wed Feb 5 2014 David Brown <david.brown@pnnl.gov> - 5.3b-2
+- Fix BuildRoot
+- add more generic/specific atlas config
+
 * Mon Jan 27 2014 David Brown <david.brown@pnnl.gov> - 5.3b-1
 - Update to upstream version
 - Fix exclusive arch to match documentation
