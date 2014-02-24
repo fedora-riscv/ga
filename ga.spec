@@ -1,6 +1,6 @@
 Name:    ga
 Version: 5.3b
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: http://hpc.pnl.gov/globalarrays/download/%{name}-5-3b.tgz
@@ -201,6 +201,9 @@ rm -rf %{buildroot}
 %ga_files openmpi
 
 %changelog
+* Sun Feb 23 2014 David Brown <david.brown@pnnl.gov> - 5.3b-3
+- Updated revision for new mpich
+
 * Wed Feb 5 2014 David Brown <david.brown@pnnl.gov> - 5.3b-2
 - Fix BuildRoot
 - add more generic/specific atlas config
