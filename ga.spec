@@ -6,7 +6,7 @@
 
 Name:    ga
 Version: 5.3b
-Release: 5%{?dist}
+Release: 6%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: http://hpc.pnl.gov/globalarrays/download/%{name}-5-3b.tgz
@@ -241,6 +241,9 @@ rm -rf %{buildroot}
 %{_libdir}/openmpi/lib/lib*.a
 
 %changelog
+* Thu Mar 27 2014 David Brown <david.brown@pnnl.gov> - 5.3b-6
+- version bump to get all fedora/epel versions in sync
+
 * Thu Mar 27 2014 David Brown <david.brown@pnnl.gov> - 5.3b-5
 - Parameterize mpich name and environment loading to cover EPEL
 
