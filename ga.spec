@@ -1,4 +1,4 @@
-%if 0%{?rhel} <= 6
+%if 0%{?fedora}%{?rhel} <= 6
 %define mpich_name mpich2
 %else
 %define mpich_name mpich
@@ -140,13 +140,13 @@ cd ..
 
 export MPI_COMPILER_NAME=mpich
 export GA_CONFIGURE_OPTIONS=""
-%if 0%{?rhel} <= 6
+%if 0%{?fedora}%{?rhel} <= 6
 %{_mpich2_load}
 %else
 %{_mpich_load}
 %endif
 %doBuild
-%if 0%{?rhel} <= 6
+%if 0%{?fedora}%{?rhel} <= 6
 %{_mpich2_unload}
 %else
 %{_mpich_unload}
@@ -166,13 +166,13 @@ cd ..
 
 rm -rf $RPM_BUILD_ROOT
 export MPI_COMPILER_NAME=mpich
-%if 0%{?rhel} <= 6
+%if 0%{?fedora}%{?rhel} <= 6
 %{_mpich2_load}
 %else
 %{_mpich_load}
 %endif
 %doInstall
-%if 0%{?rhel} <= 6
+%if 0%{?fedora}%{?rhel} <= 6
 %{_mpich2_unload}
 %else
 %{_mpich_unload}
@@ -191,7 +191,7 @@ dos2unix %{name}-%{ga_version}/COPYRIGHT
 
 %check
 %if %{?do_test}0
-%if 0%{?rhel} <= 6
+%if 0%{?fedora}%{?rhel} <= 6
 %{_mpich2_load}
 %else
 %{_mpich_load}
@@ -199,7 +199,7 @@ dos2unix %{name}-%{ga_version}/COPYRIGHT
 cd %{name}-%{version}-mpich
 make check
 cd ..
-%if 0%{?rhel} <= 6
+%if 0%{?fedora}%{?rhel} <= 6
 %{_mpich2_unload}
 %else
 %{_mpich_unload}
