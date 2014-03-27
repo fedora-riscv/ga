@@ -140,9 +140,17 @@ cd ..
 
 export MPI_COMPILER_NAME=mpich
 export GA_CONFIGURE_OPTIONS=""
+%if 0%{?rhel} <= 6
+%{_mpich2_load}
+%else
 %{_mpich_load}
+%endif
 %doBuild
+%if 0%{?rhel} <= 6
+%{_mpich2_unload}
+%else
 %{_mpich_unload}
+%endif
 
 export MPI_COMPILER_NAME=openmpi
 export GA_CONFIGURE_OPTIONS="--with-openib"
@@ -158,9 +166,17 @@ cd ..
 
 rm -rf $RPM_BUILD_ROOT
 export MPI_COMPILER_NAME=mpich
+%if 0%{?rhel} <= 6
+%{_mpich2_load}
+%else
 %{_mpich_load}
+%endif
 %doInstall
+%if 0%{?rhel} <= 6
+%{_mpich2_unload}
+%else
 %{_mpich_unload}
+%endif
 
 export MPI_COMPILER_NAME=openmpi
 %{_openmpi_load}
@@ -175,11 +191,19 @@ dos2unix %{name}-%{ga_version}/COPYRIGHT
 
 %check
 %if %{?do_test}0
+%if 0%{?rhel} <= 6
+%{_mpich2_load}
+%else
 %{_mpich_load}
+%endif
 cd %{name}-%{version}-mpich
 make check
 cd ..
+%if 0%{?rhel} <= 6
+%{_mpich2_unload}
+%else
 %{_mpich_unload}
+%endif
 %endif
 
 %clean
@@ -209,7 +233,7 @@ rm -rf %{buildroot}
 
 %changelog
 * Thu Mar 27 2014 David Brown <david.brown@pnnl.gov> - 5.3b-5
-- Parameterize mpich name to cover EPEL
+- Parameterize mpich name and environment loading to cover EPEL
 
 * Thu Mar 27 2014 David Brown <david.brown@pnnl.gov> - 5.3b-4
 - Update to include configure option fixes (1081403)
