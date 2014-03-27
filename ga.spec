@@ -125,6 +125,7 @@ cd %{name}-%{version}-$MPI_COMPILER_NAME ; \
   --with-scalapack=$MPI_LIB \\\
   --enable-shared \\\
   --enable-static \\\
+  --enable-peigs \\\
   --enable-cxx \\\
   --enable-f77 \\\
   $GA_CONFIGURE_OPTIONS ; \
@@ -201,6 +202,9 @@ rm -rf %{buildroot}
 %ga_files openmpi
 
 %changelog
+* Thu Mar 27 2014 David Brown <david.brown@pnnl.gov> - 5.3b-4
+- Update to include configure option fixes (1081403)
+
 * Sun Feb 23 2014 David Brown <david.brown@pnnl.gov> - 5.3b-3
 - Updated revision for new mpich
 
