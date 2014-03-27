@@ -1,6 +1,6 @@
 Name:    ga
 Version: 5.3b
-Release: 3%{?dist}
+Release: 4%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: http://hpc.pnl.gov/globalarrays/download/%{name}-5-3b.tgz
