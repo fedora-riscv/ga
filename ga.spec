@@ -1,13 +1,19 @@
+%if 0%{?rhel} <= 6
+%define mpich_name mpich2
+%else
+%define mpich_name mpich
+%endif
+
 Name:    ga
 Version: 5.3b
-Release: 4%{?dist}
+Release: 5%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: http://hpc.pnl.gov/globalarrays/download/%{name}-5-3b.tgz
 Patch0: ga-5-format-security.patch
 URL: http://hpc.pnl.gov/globalarrays/
 ExclusiveArch: %{ix86} x86_64
-BuildRequires: openmpi-devel, mpich2-devel, gcc-c++, gcc-gfortran, hwloc-devel
+BuildRequires: openmpi-devel, %{mpich_name}-devel, gcc-c++, gcc-gfortran, hwloc-devel
 BuildRequires: libibverbs-devel, atlas-devel, openssh-clients, dos2unix
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -38,7 +44,7 @@ BuildArch: noarch
 
 %package mpich
 Summary: Global Arrays Toolkit for MPICH
-BuildRequires: scalapack-mpich-devel, blacs-mpich-devel
+BuildRequires: scalapack-%{mpich_name}-devel, blacs-%{mpich_name}-devel
 Requires: %{name}-common = %{version}
 Provides: %{name}-mpich2 = %{version}-%{release}
 Obsoletes: %{name}-mpich2 < %{version}-%{release}
@@ -47,7 +53,7 @@ Obsoletes: %{name}-mpich2 < %{version}-%{release}
 - Libraries against MPICH.
 %package mpich-devel
 Summary: Global Arrays Toolkit for MPICH Development
-Requires: scalapack-mpich-devel, blacs-mpich-devel, mpich-devel
+Requires: scalapack-%{mpich_name}-devel, blacs-%{mpich_name}-devel, %{mpich_name}-devel
 Requires: atlas-devel, %{name}-common = %{version}, %{name}-mpich = %{version}
 Provides: %{name}-mpich2-devel = %{version}-%{release}
 Obsoletes: %{name}-mpich2-devel < %{version}-%{release}
@@ -56,7 +62,7 @@ Obsoletes: %{name}-mpich2-devel < %{version}-%{release}
 - Development Software against MPICH.
 %package mpich-static
 Summary: Global Arrays Toolkit for MPICH Static Libraries
-Requires: scalapack-mpich-devel, blacs-mpich-devel, mpich-devel
+Requires: scalapack-%{mpich_name}-devel, blacs-%{mpich_name}-devel, %{mpich_name}-devel
 Requires: atlas-devel, %{name}-common = %{version}, %{name}-mpich = %{version}
 Provides: %{name}-mpich2-static = %{version}-%{release}
 Obsoletes: %{name}-mpich2-static < %{version}-%{release}
@@ -202,6 +208,9 @@ rm -rf %{buildroot}
 %ga_files openmpi
 
 %changelog
+* Thu Mar 27 2014 David Brown <david.brown@pnnl.gov> - 5.3b-5
+- Parameterize mpich name to cover EPEL
+
 * Thu Mar 27 2014 David Brown <david.brown@pnnl.gov> - 5.3b-4
 - Update to include configure option fixes (1081403)
 
