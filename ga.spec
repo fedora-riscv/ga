@@ -214,22 +214,31 @@ rm -rf %{buildroot}
 %doc %{name}-%{ga_version}/COPYRIGHT
 %config(noreplace) %{_sysconfdir}/sysctl.d/armci.conf
 
-%define ga_files() \
-%files %{1} \
-%doc %{name}-%{ga_version}/COPYRIGHT \
-%{_libdir}/%{1}/lib/lib*.so.* \
-%{_libdir}/%{1}/bin/*.x \
-%files %{1}-devel \
-%doc %{name}-%{ga_version}/COPYRIGHT \
-%{_libdir}/%{1}/lib/lib*.so \
-%{_includedir}/%{1}-%{_arch}/* \
-%{_libdir}/%{1}/bin/ga-config \
-%files %{1}-static \
-%doc %{name}-%{ga_version}/COPYRIGHT \
-%{_libdir}/%{1}/lib/lib*.a \
+%files mpich
+%doc %{name}-%{ga_version}/COPYRIGHT
+%{_libdir}/%{mpich_name}/lib/lib*.so.*
+%{_libdir}/%{mpich_name}/bin/*.x
+%files mpich-devel
+%doc %{name}-%{ga_version}/COPYRIGHT
+%{_libdir}/%{mpich_name}/lib/lib*.so
+%{_includedir}/%{mpich_name}-%{_arch}/*
+%{_libdir}/%{mpich_name}/bin/ga-config
+%files mpich-static
+%doc %{name}-%{ga_version}/COPYRIGHT
+%{_libdir}/%{mpich_name}/lib/lib*.a
 
-%ga_files mpich
-%ga_files openmpi
+%files openmpi
+%doc %{name}-%{ga_version}/COPYRIGHT
+%{_libdir}/openmpi/lib/lib*.so.*
+%{_libdir}/openmpi/bin/*.x
+%files openmpi-devel
+%doc %{name}-%{ga_version}/COPYRIGHT
+%{_libdir}/openmpi/lib/lib*.so
+%{_includedir}/openmpi-%{_arch}/*
+%{_libdir}/openmpi/bin/ga-config
+%files openmpi-static
+%doc %{name}-%{ga_version}/COPYRIGHT
+%{_libdir}/openmpi/lib/lib*.a
 
 %changelog
 * Thu Mar 27 2014 David Brown <david.brown@pnnl.gov> - 5.3b-5
