@@ -6,7 +6,7 @@
 
 Name:    ga
 Version: 5.3b
-Release: 6%{?dist}
+Release: 7%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: http://hpc.pnl.gov/globalarrays/download/%{name}-5-3b.tgz
@@ -120,8 +120,14 @@ done
 %define atlas_libs -lf77blas -llapack
 %endif
 
+%if 0%{?fedora} >= 21
+%global blacs_libs -lmpiblacs
+%else
+%global	blacs_libs -lmpiblacs -lmpiblacsCinit -lmpiblacsF77init
+%endif
+
 %define doBuild \
-export LIBS="-lscalapack -lmpiblacs -lmpiblacsCinit -lmpiblacsF77init -L%{_libdir}/atlas %{atlas_libs} -lm" ; \
+export LIBS="-lscalapack %{blacs_libs} -L%{_libdir}/atlas %{atlas_libs} -lm" ; \
 cd %{name}-%{version}-$MPI_COMPILER_NAME ; \
 %configure \\\
   --bindir=$MPI_BIN \\\
@@ -241,6 +247,9 @@ rm -rf %{buildroot}
 %{_libdir}/openmpi/lib/lib*.a
 
 %changelog
+* Mon May 12 2014 Tom Callaway <spot@fedoraproject.org> - 5.3b-7
+- rebuild against new blacs
+
 * Thu Mar 27 2014 David Brown <david.brown@pnnl.gov> - 5.3b-6
 - version bump to get all fedora/epel versions in sync
 
