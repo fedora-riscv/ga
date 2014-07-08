@@ -38,6 +38,7 @@ is provided.
 
 %package common
 Summary: Global Arrays Common Files
+Group: Development/Tools
 BuildArch: noarch
 %description common
 %{ga_desc_base}
@@ -45,6 +46,7 @@ BuildArch: noarch
 
 %package mpich
 Summary: Global Arrays Toolkit for MPICH
+Group: Development/Tools
 Requires: scalapack-%{mpich_name}, blacs-%{mpich_name}, %{mpich_name}
 BuildRequires: scalapack-%{mpich_name}-devel, blacs-%{mpich_name}-devel
 Requires: %{name}-common = %{version}
@@ -55,6 +57,7 @@ Obsoletes: %{name}-mpich2 < %{version}-%{release}
 - Libraries against MPICH.
 %package mpich-devel
 Summary: Global Arrays Toolkit for MPICH Development
+Group: Development/Tools
 Requires: scalapack-%{mpich_name}-devel, blacs-%{mpich_name}-devel, %{mpich_name}-devel
 Requires: atlas-devel, %{name}-common = %{version}, %{name}-mpich = %{version}
 Provides: %{name}-mpich2-devel = %{version}-%{release}
@@ -64,6 +67,7 @@ Obsoletes: %{name}-mpich2-devel < %{version}-%{release}
 - Development Software against MPICH.
 %package mpich-static
 Summary: Global Arrays Toolkit for MPICH Static Libraries
+Group: Development/Tools
 Requires: scalapack-%{mpich_name}-devel, blacs-%{mpich_name}-devel, %{mpich_name}-devel
 Requires: atlas-devel, %{name}-common = %{version}, %{name}-mpich = %{version}
 Provides: %{name}-mpich2-static = %{version}-%{release}
@@ -76,6 +80,7 @@ Obsoletes: %{name}-mpich2-static < %{version}-%{release}
 
 %package openmpi
 Summary: Global Arrays Toolkit for OpenMPI
+Group: Development/Tools
 Requires: scalapack-openmpi, blacs-openmpi, openmpi
 BuildRequires: scalapack-openmpi-devel, blacs-openmpi-devel
 Requires: %{name}-common = %{version}
@@ -84,6 +89,7 @@ Requires: %{name}-common = %{version}
 - Libraries against OpenMPI.
 %package openmpi-devel
 Summary: Global Arrays Toolkit for OpenMPI Development
+Group: Development/Tools
 Requires: scalapack-openmpi-devel, blacs-openmpi-devel, openmpi-devel
 Requires: atlas-devel, %{name}-common = %{version}, %{name}-openmpi = %{version}
 %description openmpi-devel
@@ -91,6 +97,7 @@ Requires: atlas-devel, %{name}-common = %{version}, %{name}-openmpi = %{version}
 - Development Software against OpenMPI.
 %package openmpi-static
 Summary: Global Arrays Toolkit for OpenMPI Static Libraries
+Group: Development/Tools
 Requires: scalapack-openmpi-devel, blacs-openmpi-devel, openmpi-devel
 Requires: atlas-devel, %{name}-common = %{version}, %{name}-openmpi = %{version}
 %description openmpi-static
