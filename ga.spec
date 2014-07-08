@@ -249,7 +249,7 @@ rm -rf %{buildroot}
 %{_libdir}/openmpi/lib/lib*.a
 
 %changelog
-* Mon July 07 2014 David Brown <david.brown@pnnl.gov> - 5.3b-8
+* Mon Jul 07 2014 David Brown <david.brown@pnnl.gov> - 5.3b-8
 - add explicit requires for mpich and openmpi packages (#1116627)
 
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.3b-8
