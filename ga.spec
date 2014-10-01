@@ -249,7 +249,7 @@ rm -rf %{buildroot}
 %{_libdir}/openmpi/lib/lib*.a
 
 %changelog
-* Tue Sep 30 2013 David Brown <david.brown@pnnl.gov> - 5.3b-11
+* Tue Sep 30 2014 David Brown <david.brown@pnnl.gov> - 5.3b-11
 - Rebuilt for updated upstream package
 
 * Sat Aug 16 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.3b-10
