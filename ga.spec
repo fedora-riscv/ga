@@ -46,6 +46,7 @@ BuildArch: noarch
 Summary: Global Arrays Toolkit for MPICH
 Requires: scalapack-%{mpich_name}, blacs-%{mpich_name}, %{mpich_name}
 BuildRequires: scalapack-%{mpich_name}-devel, blacs-%{mpich_name}-devel
+BuildRequires: lapack-devel
 Requires: %{name}-common = %{version}
 Provides: %{name}-mpich2 = %{version}-%{release}
 Obsoletes: %{name}-mpich2 < %{version}-%{release}
@@ -55,6 +56,7 @@ Obsoletes: %{name}-mpich2 < %{version}-%{release}
 %package mpich-devel
 Summary: Global Arrays Toolkit for MPICH Development
 Requires: scalapack-%{mpich_name}-devel, blacs-%{mpich_name}-devel, %{mpich_name}-devel
+Requires: lapack-devel
 Requires: atlas-devel, %{name}-common = %{version}, %{name}-mpich = %{version}
 Provides: %{name}-mpich2-devel = %{version}-%{release}
 Obsoletes: %{name}-mpich2-devel < %{version}-%{release}
@@ -64,6 +66,7 @@ Obsoletes: %{name}-mpich2-devel < %{version}-%{release}
 %package mpich-static
 Summary: Global Arrays Toolkit for MPICH Static Libraries
 Requires: scalapack-%{mpich_name}-devel, blacs-%{mpich_name}-devel, %{mpich_name}-devel
+Requires: lapack-devel
 Requires: atlas-devel, %{name}-common = %{version}, %{name}-mpich = %{version}
 Provides: %{name}-mpich2-static = %{version}-%{release}
 Obsoletes: %{name}-mpich2-static < %{version}-%{release}
@@ -77,6 +80,7 @@ Obsoletes: %{name}-mpich2-static < %{version}-%{release}
 Summary: Global Arrays Toolkit for OpenMPI
 Requires: scalapack-openmpi, blacs-openmpi, openmpi
 BuildRequires: scalapack-openmpi-devel, blacs-openmpi-devel
+BuildRequires: lapack-devel
 Requires: %{name}-common = %{version}
 %description openmpi
 %{ga_desc_base}
@@ -84,6 +88,7 @@ Requires: %{name}-common = %{version}
 %package openmpi-devel
 Summary: Global Arrays Toolkit for OpenMPI Development
 Requires: scalapack-openmpi-devel, blacs-openmpi-devel, openmpi-devel
+Requires: lapack-devel
 Requires: atlas-devel, %{name}-common = %{version}, %{name}-openmpi = %{version}
 %description openmpi-devel
 %{ga_desc_base}
