@@ -121,7 +121,7 @@ done
 %if 0%{?fedora}%{?rhel} == 20
 %define atlas_libs -latlas -lcblas -lclapack -lf77blas -llapack -lptcblas -lptf77blas
 %endif
-%if 0%{?fedora}%{?rhel} == 21
+%if 0%{?fedora}%{?rhel} >= 21
 %define atlas_libs -lsatlas
 %else
 %define atlas_libs -lf77blas -llapack
