@@ -6,7 +6,7 @@
 
 Name:    ga
 Version: 5.3b
-Release: 11%{?dist}
+Release: 12%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: http://hpc.pnl.gov/globalarrays/download/%{name}-5-3b.tgz
@@ -254,6 +254,10 @@ rm -rf %{buildroot}
 %{_libdir}/openmpi/lib/lib*.a
 
 %changelog
+* Sun Oct 5 2014 David Brown <david.brown@pnnl.gov> - 5.3b-12
+- Fix up some conditions for f22
+- Add more dependancies on lapack-devel in right places
+
 * Tue Sep 30 2014 David Brown <david.brown@pnnl.gov> - 5.3b-11
 - Rebuilt for updated upstream package
 
