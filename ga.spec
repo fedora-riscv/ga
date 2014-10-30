@@ -126,7 +126,7 @@ done
 %if 0%{?fedora} >= 21
 %global blacs_libs -lmpiblacs
 %else
-%global	blacs_libs -lmpiblacs -lmpiblacsCinit -lmpiblacsF77init
+%global	blacs_libs -lmpiblacs
 %endif
 
 %define doBuild \
