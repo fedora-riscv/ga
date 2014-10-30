@@ -1,12 +1,8 @@
-%if 0%{?fedora}%{?rhel} <= 6
-%define mpich_name mpich2
-%else
 %define mpich_name mpich
-%endif
 
 Name:    ga
 Version: 5.3b
-Release: 12%{?dist}
+Release: 13%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: http://hpc.pnl.gov/globalarrays/download/%{name}-5-3b.tgz
@@ -153,17 +149,9 @@ cd ..
 
 export MPI_COMPILER_NAME=mpich
 export GA_CONFIGURE_OPTIONS=""
-%if 0%{?fedora}%{?rhel} <= 6
-%{_mpich2_load}
-%else
 %{_mpich_load}
-%endif
 %doBuild
-%if 0%{?fedora}%{?rhel} <= 6
-%{_mpich2_unload}
-%else
 %{_mpich_unload}
-%endif
 
 export MPI_COMPILER_NAME=openmpi
 export GA_CONFIGURE_OPTIONS="--with-openib"
@@ -179,17 +167,9 @@ cd ..
 
 rm -rf $RPM_BUILD_ROOT
 export MPI_COMPILER_NAME=mpich
-%if 0%{?fedora}%{?rhel} <= 6
-%{_mpich2_load}
-%else
 %{_mpich_load}
-%endif
 %doInstall
-%if 0%{?fedora}%{?rhel} <= 6
-%{_mpich2_unload}
-%else
 %{_mpich_unload}
-%endif
 
 export MPI_COMPILER_NAME=openmpi
 %{_openmpi_load}
@@ -204,20 +184,11 @@ dos2unix %{name}-%{ga_version}/COPYRIGHT
 
 %check
 %if %{?do_test}0
-%if 0%{?fedora}%{?rhel} <= 6
-%{_mpich2_load}
-%else
 %{_mpich_load}
-%endif
 cd %{name}-%{version}-mpich
 make check
 cd ..
-%if 0%{?fedora}%{?rhel} <= 6
-%{_mpich2_unload}
-%else
 %{_mpich_unload}
-%endif
-%endif
 
 %clean
 rm -rf %{buildroot}
@@ -254,6 +225,9 @@ rm -rf %{buildroot}
 %{_libdir}/openmpi/lib/lib*.a
 
 %changelog
+* Wed Oct 29 2014 David Brown <david.brown@pnnl.gov> - 5.3b-13
+- Rebuild to fix bug #1155077
+
 * Sun Oct 5 2014 David Brown <david.brown@pnnl.gov> - 5.3b-12
 - Fix up some conditions for f22
 - Add more dependancies on lapack-devel in right places
