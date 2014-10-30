@@ -111,6 +111,9 @@ for i in mpich openmpi; do
 done
 
 %build
+%if 0%{?rhel} >= 7
+%define atlas_libs -lsatlas
+%endif
 %if 0%{?fedora}%{?rhel} == 19
 %define atlas_libs -lsatlas
 %endif
