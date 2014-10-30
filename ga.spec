@@ -189,6 +189,7 @@ cd %{name}-%{version}-mpich
 make check
 cd ..
 %{_mpich_unload}
+%endif
 
 %clean
 rm -rf %{buildroot}
