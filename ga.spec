@@ -2,7 +2,7 @@
 
 Name:    ga
 Version: 5.3b
-Release: 13%{?dist}
+Release: 14%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: http://hpc.pnl.gov/globalarrays/download/%{name}-5-3b.tgz
@@ -122,7 +122,8 @@ done
 %endif
 %if 0%{?fedora}%{?rhel} >= 21
 %define atlas_libs -lsatlas
-%else
+%endif
+%if 0%{?rhel} <= 6
 %define atlas_libs -lf77blas -llapack
 %endif
 
@@ -229,6 +230,9 @@ rm -rf %{buildroot}
 %{_libdir}/openmpi/lib/lib*.a
 
 %changelog
+* Wed Nov 19 2014 David Brown <david.brown@pnnl.gov> - 5.3b-14
+- Fix bug #1150473 to support epel7
+
 * Wed Oct 29 2014 David Brown <david.brown@pnnl.gov> - 5.3b-13
 - Rebuild to fix bug #1155077
 
