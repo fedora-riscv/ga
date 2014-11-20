@@ -123,7 +123,7 @@ done
 %if 0%{?fedora}%{?rhel} >= 21
 %define atlas_libs -lsatlas
 %endif
-%if 0%{?rhel} <= 6
+%if 0%{?rhel} == 6
 %define atlas_libs -lf77blas -llapack
 %endif
 
