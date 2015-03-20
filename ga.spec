@@ -2,7 +2,7 @@
 
 Name:    ga
 Version: 5.3b
-Release: 14%{?dist}
+Release: 15%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: http://hpc.pnl.gov/globalarrays/download/%{name}-5-3b.tgz
@@ -230,6 +230,9 @@ rm -rf %{buildroot}
 %{_libdir}/openmpi/lib/lib*.a
 
 %changelog
+* Wed Mar 20 2015 David Brown <david.brown@pnnl.gov> - 5.3b-15
+- Rebuild to support new version of mpich
+
 * Wed Nov 19 2014 David Brown <david.brown@pnnl.gov> - 5.3b-14
 - Fix bug #1150473 to support epel7
 
