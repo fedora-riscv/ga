@@ -230,7 +230,7 @@ rm -rf %{buildroot}
 %{_libdir}/openmpi/lib/lib*.a
 
 %changelog
-* Wed Mar 20 2015 David Brown <david.brown@pnnl.gov> - 5.3b-15
+* Fri Mar 20 2015 David Brown <david.brown@pnnl.gov> - 5.3b-15
 - Rebuild to support new version of mpich
 
 * Wed Nov 19 2014 David Brown <david.brown@pnnl.gov> - 5.3b-14
