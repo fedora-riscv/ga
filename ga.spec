@@ -2,7 +2,7 @@
 
 Name:    ga
 Version: 5.3b
-Release: 15%{?dist}
+Release: 16%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: http://hpc.pnl.gov/globalarrays/download/%{name}-5-3b.tgz
@@ -230,6 +230,9 @@ rm -rf %{buildroot}
 %{_libdir}/openmpi/lib/lib*.a
 
 %changelog
+* Sun May  3 2015 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 5.3b-16
+- Rebuild for changed mpich
+
 * Fri Mar 20 2015 David Brown <david.brown@pnnl.gov> - 5.3b-15
 - Rebuild to support new version of mpich
 
