@@ -2,7 +2,7 @@
 
 Name:    ga
 Version: 5.3b
-Release: 16%{?dist}
+Release: 17%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: http://hpc.pnl.gov/globalarrays/download/%{name}-5-3b.tgz
@@ -230,6 +230,9 @@ rm -rf %{buildroot}
 %{_libdir}/openmpi/lib/lib*.a
 
 %changelog
+* Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.3b-17
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
 * Sat May 02 2015 Kalev Lember <kalevlember@gmail.com> - 5.3b-16
 - Rebuilt for GCC 5 C++11 ABI change
 
