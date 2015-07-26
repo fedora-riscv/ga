@@ -2,7 +2,7 @@
 
 Name:    ga
 Version: 5.3b
-Release: 17%{?dist}
+Release: 18%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: http://hpc.pnl.gov/globalarrays/download/%{name}-5-3b.tgz
@@ -40,7 +40,6 @@ BuildArch: noarch
 
 %package mpich
 Summary: Global Arrays Toolkit for MPICH
-Requires: scalapack-%{mpich_name}, blacs-%{mpich_name}, %{mpich_name}
 BuildRequires: scalapack-%{mpich_name}-devel, blacs-%{mpich_name}-devel
 BuildRequires: lapack-devel
 Requires: %{name}-common = %{version}
@@ -74,7 +73,6 @@ Obsoletes: %{name}-mpich2-static < %{version}-%{release}
 
 %package openmpi
 Summary: Global Arrays Toolkit for OpenMPI
-Requires: scalapack-openmpi, blacs-openmpi, openmpi
 BuildRequires: scalapack-openmpi-devel, blacs-openmpi-devel
 BuildRequires: lapack-devel
 Requires: %{name}-common = %{version}
@@ -230,6 +228,9 @@ rm -rf %{buildroot}
 %{_libdir}/openmpi/lib/lib*.a
 
 %changelog
+* Sun Jul 26 2015 Sandro Mani <manisandro@gmail.com> - 5.3b-18
+- Rebuild for RPM MPI Requires Provides Change
+
 * Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.3b-17
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
