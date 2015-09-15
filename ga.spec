@@ -2,7 +2,7 @@
 
 Name:    ga
 Version: 5.3b
-Release: 18%{?dist}
+Release: 19%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: http://hpc.pnl.gov/globalarrays/download/%{name}-5-3b.tgz
@@ -228,6 +228,9 @@ rm -rf %{buildroot}
 %{_libdir}/openmpi/lib/lib*.a
 
 %changelog
+* Tue Sep 15 2015 Orion Poplawski <orion@cora.nwra.com> - 5.3b-19
+- Rebuild for openmpi 1.10.0
+
 * Sun Jul 26 2015 Sandro Mani <manisandro@gmail.com> - 5.3b-18
 - Rebuild for RPM MPI Requires Provides Change
 
