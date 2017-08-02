@@ -2,7 +2,7 @@
 
 Name:    ga
 Version: 5.3b
-Release: 23%{?dist}
+Release: 24%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: http://hpc.pnl.gov/globalarrays/download/%{name}-5-3b.tgz
@@ -228,6 +228,9 @@ rm -rf %{buildroot}
 %{_libdir}/openmpi/lib/lib*.a
 
 %changelog
+* Wed Aug 02 2017 Fedora Release Engineering <releng@fedoraproject.org> - 5.3b-24
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
+
 * Wed Jul 26 2017 Fedora Release Engineering <releng@fedoraproject.org> - 5.3b-23
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
 
