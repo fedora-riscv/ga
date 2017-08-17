@@ -1,13 +1,12 @@
 %define mpich_name mpich
 
 Name:    ga
-Version: 5.3b
-Release: 24%{?dist}
+Version: 5.6.1
+Release: 1%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
-Source: http://hpc.pnl.gov/globalarrays/download/%{name}-5-3b.tgz
-Patch0: ga-5-format-security.patch
-URL: http://hpc.pnl.gov/globalarrays/
+Source: https://github.com/GlobalArrays/ga/releases/download/v%{version}/ga-%{version}.tar.gz
+URL: http://github.com/GlobalArrays/ga
 ExclusiveArch: %{ix86} x86_64
 BuildRequires: openmpi-devel, %{mpich_name}-devel, gcc-c++, gcc-gfortran, hwloc-devel
 BuildRequires: libibverbs-devel, atlas-devel, openssh-clients, dos2unix
