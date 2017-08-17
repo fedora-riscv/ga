@@ -101,7 +101,6 @@ Requires: atlas-devel, %{name}-common = %{version}, %{name}-openmpi = %{version}
 %prep
 %setup -q -c -n %{name}-%{version}
 pushd %{name}-%{ga_version}
-%patch0 -p1
 popd
 for i in mpich openmpi; do
   cp -a %{name}-%{ga_version} %{name}-%{version}-$i
