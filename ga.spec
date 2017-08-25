@@ -96,7 +96,7 @@ Requires: atlas-devel, %{name}-common = %{version}, %{name}-openmpi = %{version}
 %post openmpi -p /sbin/ldconfig
 %postun openmpi -p /sbin/ldconfig
 
-%define ga_version 5-3b
+%define ga_version 5.6.1
 
 %prep
 %setup -q -c -n %{name}-%{version}
@@ -136,7 +136,6 @@ cd %{name}-%{version}-$MPI_COMPILER_NAME ; \
   --bindir=$MPI_BIN \\\
   --libdir=$MPI_LIB \\\
   --includedir=$MPI_INCLUDE \\\
-  --with-altas=%{_libdir}/atlas \\\
   --with-scalapack=$MPI_LIB \\\
   --enable-shared \\\
   --enable-static \\\
@@ -195,7 +194,7 @@ cd ..
 rm -rf %{buildroot}
 
 %files common
-%doc %{name}-%{ga_version}/README %{name}-%{ga_version}/NEWS
+%doc %{name}-%{ga_version}/README.md %{name}-%{ga_version}/CHANGELOG.md
 %doc %{name}-%{ga_version}/COPYRIGHT
 %config(noreplace) %{_sysconfdir}/sysctl.d/armci.conf
 
@@ -226,6 +225,10 @@ rm -rf %{buildroot}
 %{_libdir}/openmpi/lib/lib*.a
 
 %changelog
+* Fri Aug 25 2017 Adam Williamson <awilliam@redhat.com> - 5.6.1-1
+- New release 5.6.1
+- Minor spec fixups
+
 * Wed Aug 02 2017 Fedora Release Engineering <releng@fedoraproject.org> - 5.3b-24
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
 
