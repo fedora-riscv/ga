@@ -2,7 +2,7 @@
 
 Name:    ga
 Version: 5.6.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: https://github.com/GlobalArrays/ga/releases/download/v%{version}/ga-%{version}.tar.gz
@@ -225,6 +225,9 @@ rm -rf %{buildroot}
 %{_libdir}/openmpi/lib/lib*.a
 
 %changelog
+* Wed Feb 07 2018 Fedora Release Engineering <releng@fedoraproject.org> - 5.6.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
+
 * Fri Aug 25 2017 Adam Williamson <awilliam@redhat.com> - 5.6.1-1
 - New release 5.6.1
 - Minor spec fixups
