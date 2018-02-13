@@ -10,7 +10,6 @@ URL: http://github.com/GlobalArrays/ga
 ExclusiveArch: %{ix86} x86_64
 BuildRequires: openmpi-devel, %{mpich_name}-devel, gcc-c++, gcc-gfortran, hwloc-devel
 BuildRequires: libibverbs-devel, atlas-devel, openssh-clients, dos2unix
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %define ga_desc_base \
 The Global Arrays (GA) toolkit provides an efficient and portable \
