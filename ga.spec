@@ -189,9 +189,6 @@ cd ..
 %{_mpich_unload}
 %endif
 
-%clean
-rm -rf %{buildroot}
-
 %files common
 %doc %{name}-%{ga_version}/README.md %{name}-%{ga_version}/CHANGELOG.md
 %doc %{name}-%{ga_version}/COPYRIGHT
