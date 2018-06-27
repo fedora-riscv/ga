@@ -1,3 +1,8 @@
+# Warning:
+# Anyone editing this spec file please make sure the same spec file
+# works on other fedora and epel releases, which are supported by this software.
+# No quick Rawhide-only fixes will be allowed.
+
 %define mpich_name mpich
 
 Name:    ga
