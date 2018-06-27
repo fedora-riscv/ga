@@ -1,15 +1,15 @@
 %define mpich_name mpich
 
 Name:    ga
-Version: 5.6.1
-Release: 2%{?dist}
+Version: 5.6.5
+Release: 1%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: https://github.com/GlobalArrays/ga/releases/download/v%{version}/ga-%{version}.tar.gz
 URL: http://github.com/GlobalArrays/ga
 ExclusiveArch: %{ix86} x86_64
 BuildRequires: openmpi-devel, %{mpich_name}-devel, gcc-c++, gcc-gfortran, hwloc-devel
-BuildRequires: libibverbs-devel, atlas-devel, openssh-clients, dos2unix
+BuildRequires: libibverbs-devel, openblas-devel, openssh-clients, dos2unix
 
 %define ga_desc_base \
 The Global Arrays (GA) toolkit provides an efficient and portable \
@@ -38,7 +38,7 @@ BuildArch: noarch
 
 %package mpich
 Summary: Global Arrays Toolkit for MPICH
-BuildRequires: scalapack-%{mpich_name}-devel, blacs-%{mpich_name}-devel
+BuildRequires: scalapack-%{mpich_name}-devel
 BuildRequires: lapack-devel
 Requires: %{name}-common = %{version}
 Provides: %{name}-mpich2 = %{version}-%{release}
@@ -48,9 +48,9 @@ Obsoletes: %{name}-mpich2 < %{version}-%{release}
 - Libraries against MPICH.
 %package mpich-devel
 Summary: Global Arrays Toolkit for MPICH Development
-Requires: scalapack-%{mpich_name}-devel, blacs-%{mpich_name}-devel, %{mpich_name}-devel
+Requires: scalapack-%{mpich_name}-devel, %{mpich_name}-devel
 Requires: lapack-devel
-Requires: atlas-devel, %{name}-common = %{version}, %{name}-mpich = %{version}
+Requires: openblas-devel, %{name}-common = %{version}, %{name}-mpich = %{version}
 Provides: %{name}-mpich2-devel = %{version}-%{release}
 Obsoletes: %{name}-mpich2-devel < %{version}-%{release}
 %description mpich-devel
@@ -58,9 +58,9 @@ Obsoletes: %{name}-mpich2-devel < %{version}-%{release}
 - Development Software against MPICH.
 %package mpich-static
 Summary: Global Arrays Toolkit for MPICH Static Libraries
-Requires: scalapack-%{mpich_name}-devel, blacs-%{mpich_name}-devel, %{mpich_name}-devel
+Requires: scalapack-%{mpich_name}-devel, %{mpich_name}-devel
 Requires: lapack-devel
-Requires: atlas-devel, %{name}-common = %{version}, %{name}-mpich = %{version}
+Requires: openblas-devel, %{name}-common = %{version}, %{name}-mpich = %{version}
 Provides: %{name}-mpich2-static = %{version}-%{release}
 Obsoletes: %{name}-mpich2-static < %{version}-%{release}
 %description mpich-static
@@ -71,7 +71,7 @@ Obsoletes: %{name}-mpich2-static < %{version}-%{release}
 
 %package openmpi
 Summary: Global Arrays Toolkit for OpenMPI
-BuildRequires: scalapack-openmpi-devel, blacs-openmpi-devel
+BuildRequires: scalapack-openmpi-devel
 BuildRequires: lapack-devel
 Requires: %{name}-common = %{version}
 %description openmpi
@@ -79,23 +79,23 @@ Requires: %{name}-common = %{version}
 - Libraries against OpenMPI.
 %package openmpi-devel
 Summary: Global Arrays Toolkit for OpenMPI Development
-Requires: scalapack-openmpi-devel, blacs-openmpi-devel, openmpi-devel
+Requires: scalapack-openmpi-devel, openmpi-devel
 Requires: lapack-devel
-Requires: atlas-devel, %{name}-common = %{version}, %{name}-openmpi = %{version}
+Requires: openblas-devel, %{name}-common = %{version}, %{name}-openmpi = %{version}
 %description openmpi-devel
 %{ga_desc_base}
 - Development Software against OpenMPI.
 %package openmpi-static
 Summary: Global Arrays Toolkit for OpenMPI Static Libraries
-Requires: scalapack-openmpi-devel, blacs-openmpi-devel, openmpi-devel
-Requires: atlas-devel, %{name}-common = %{version}, %{name}-openmpi = %{version}
+Requires: scalapack-openmpi-devel, openmpi-devel
+Requires: openblas-devel, %{name}-common = %{version}, %{name}-openmpi = %{version}
 %description openmpi-static
 %{ga_desc_base}
 - Static Libraries against OpenMPI.
 %post openmpi -p /sbin/ldconfig
 %postun openmpi -p /sbin/ldconfig
 
-%define ga_version 5.6.1
+%define ga_version 5.6.5
 
 %prep
 %setup -q -c -n %{name}-%{version}
@@ -105,37 +105,17 @@ for i in mpich openmpi; do
   cp -a %{name}-%{ga_version} %{name}-%{version}-$i
 done
 
-%build
-%if 0%{?rhel} >= 7
-%define atlas_libs -lsatlas
-%endif
-%if 0%{?fedora}%{?rhel} == 19
-%define atlas_libs -lsatlas
-%endif
-%if 0%{?fedora}%{?rhel} == 20
-%define atlas_libs -latlas -lcblas -lclapack -lf77blas -llapack -lptcblas -lptf77blas
-%endif
-%if 0%{?fedora}%{?rhel} >= 21
-%define atlas_libs -lsatlas
-%endif
-%if 0%{?rhel} == 6
-%define atlas_libs -lf77blas -llapack
-%endif
 
-%if 0%{?fedora} >= 21
-%global blacs_libs -lmpiblacs
-%else
-%global	blacs_libs -lmpiblacs
-%endif
 
 %define doBuild \
-export LIBS="-lscalapack %{blacs_libs} -L%{_libdir}/atlas %{atlas_libs} -lm" ; \
+export LIBS="-lscalapack  -lopenblas -lm" ; \
 cd %{name}-%{version}-$MPI_COMPILER_NAME ; \
 %configure \\\
   --bindir=$MPI_BIN \\\
   --libdir=$MPI_LIB \\\
   --includedir=$MPI_INCLUDE \\\
-  --with-scalapack=$MPI_LIB \\\
+  --with-scalapack4=-lscalapack \\\
+  --with-blas4=-lopenblas \\\
   --enable-shared \\\
   --enable-static \\\
   --enable-peigs \\\
@@ -203,6 +183,8 @@ cd ..
 %{_libdir}/%{mpich_name}/lib/lib*.so
 %{_includedir}/%{mpich_name}-%{_arch}/*
 %{_libdir}/%{mpich_name}/bin/ga-config
+%{_libdir}/%{mpich_name}/bin/armci-config
+%{_libdir}/%{mpich_name}/bin/comex-config
 %files mpich-static
 %doc %{name}-%{ga_version}/COPYRIGHT
 %{_libdir}/%{mpich_name}/lib/lib*.a
@@ -216,11 +198,18 @@ cd ..
 %{_libdir}/openmpi/lib/lib*.so
 %{_includedir}/openmpi-%{_arch}/*
 %{_libdir}/openmpi/bin/ga-config
+%{_libdir}/openmpi/bin/armci-config
 %files openmpi-static
 %doc %{name}-%{ga_version}/COPYRIGHT
 %{_libdir}/openmpi/lib/lib*.a
 
 %changelog
+* Wed Jun 13 2018 Edoardo Apra <edoardo.apra@gmail.com> - 5.6.5-1
+- New release 5.6.5
+- Replaced Atlas with OpenBLAS
+- Made compatible with ScaLapack RPM updates
+- Added options -with-blas4 to work with NWChem
+
 * Wed Feb 07 2018 Fedora Release Engineering <releng@fedoraproject.org> - 5.6.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
