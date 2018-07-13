@@ -7,7 +7,7 @@
 
 Name:    ga
 Version: 5.6.5
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: https://github.com/GlobalArrays/ga/releases/download/v%{version}/ga-%{version}.tar.gz
@@ -209,6 +209,9 @@ cd ..
 %{_libdir}/openmpi/lib/lib*.a
 
 %changelog
+* Fri Jul 13 2018 Fedora Release Engineering <releng@fedoraproject.org> - 5.6.5-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
+
 * Wed Jun 13 2018 Edoardo Apra <edoardo.apra@gmail.com> - 5.6.5-1
 - New release 5.6.5
 - Replaced Atlas with OpenBLAS
