@@ -7,11 +7,12 @@
 
 Name:    ga
 Version: 5.6.5
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: https://github.com/GlobalArrays/ga/releases/download/v%{version}/ga-%{version}.tar.gz
 URL: http://github.com/GlobalArrays/ga
+Patch0:	ga_diag_seq.patch
 ExclusiveArch: %{ix86} x86_64
 BuildRequires: openmpi-devel, %{mpich_name}-devel, gcc-c++, gcc-gfortran, hwloc-devel
 BuildRequires: libibverbs-devel, openblas-devel, openssh-clients, dos2unix
@@ -104,6 +105,8 @@ Requires: openblas-devel, %{name}-common = %{version}, %{name}-openmpi = %{versi
 
 %prep
 %setup -q -c -n %{name}-%{version}
+%patch0 -p0
+
 pushd %{name}-%{ga_version}
 popd
 for i in mpich openmpi; do
@@ -209,6 +212,9 @@ cd ..
 %{_libdir}/openmpi/lib/lib*.a
 
 %changelog
+* Tue Aug 07 2018 Edoardo Apra <edoardo.apra@gmail.com> - 5.6.5-3
+- fortran integer casting in ga_diag. Fixes #1613089
+
 * Fri Jul 13 2018 Fedora Release Engineering <releng@fedoraproject.org> - 5.6.5-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
