@@ -72,8 +72,7 @@ Obsoletes: %{name}-mpich2-static < %{version}-%{release}
 %description mpich-static
 %{ga_desc_base}
 - Static Libraries against MPICH.
-%post mpich -p /sbin/ldconfig
-%postun mpich -p /sbin/ldconfig
+%ldconfig_scriptlets mpich
 
 %package openmpi
 Summary: Global Arrays Toolkit for OpenMPI
@@ -98,8 +97,7 @@ Requires: openblas-devel, %{name}-common = %{version}, %{name}-openmpi = %{versi
 %description openmpi-static
 %{ga_desc_base}
 - Static Libraries against OpenMPI.
-%post openmpi -p /sbin/ldconfig
-%postun openmpi -p /sbin/ldconfig
+%ldconfig_scriptlets openmpi
 
 %define ga_version 5.6.5
 
