@@ -7,7 +7,7 @@
 
 Name:    ga
 Version: 5.6.5
-Release: 3%{?dist}
+Release: 4%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: https://github.com/GlobalArrays/ga/releases/download/v%{version}/ga-%{version}.tar.gz
@@ -210,6 +210,9 @@ cd ..
 %{_libdir}/openmpi/lib/lib*.a
 
 %changelog
+* Thu Jan 31 2019 Fedora Release Engineering <releng@fedoraproject.org> - 5.6.5-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
+
 * Tue Aug 07 2018 Edoardo Apra <edoardo.apra@gmail.com> - 5.6.5-3
 - fortran integer casting in ga_diag. Fixes #1613089
 
