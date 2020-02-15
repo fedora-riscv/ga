@@ -3,11 +3,17 @@
 # works on other fedora and epel releases, which are supported by this software.
 # No quick Rawhide-only fixes will be allowed.
 
+%if 0%{?fedora} >= 32
+%global extra_gfortran_flags -fallow-argument-mismatch
+%else
+%global extra_gfortran_flags %{nil}
+%endif
+
 %define mpich_name mpich
 
 Name:    ga
 Version: 5.6.5
-Release: 7%{?dist}
+Release: 8%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: https://github.com/GlobalArrays/ga/releases/download/v%{version}/ga-%{version}.tar.gz
@@ -116,6 +122,7 @@ done
 %define doBuild \
 export LIBS="-lscalapack  -lopenblas -lm" ; \
 cd %{name}-%{version}-$MPI_COMPILER_NAME ; \
+export GA_FOPT='%{extra_gfortran_flags}'; \
 %configure \\\
   --bindir=$MPI_BIN \\\
   --libdir=$MPI_LIB \\\
@@ -210,6 +217,9 @@ cd ..
 %{_libdir}/openmpi/lib/lib*.a
 
 %changelog
+* Fri Feb 14 2020 Marcin Dulak <Marcin.Dulak@gmail.com> - 5.6.5-8
+- -fallow-argument-mismatch fix for gfortran 10
+
 * Tue Jan 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 5.6.5-7
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
 
