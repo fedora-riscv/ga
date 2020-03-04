@@ -1,0 +1,64 @@
+diff -u ga-5.7.2/global/testing/elempatch.c.org  ga-5.7.1/global/testing/elempatch.c
+--- ga-5.7.2/global/testing/elempatch.c.org	2020-02-17 12:56:51.811130391 -0800
++++ ga-5.7.2/global/testing/elempatch.c	2020-02-17 14:39:55.394616825 -0800
+@@ -154,8 +154,8 @@
+ #define OP_ABS 4
+ #define OP_ADD_CONST 5
+ #define OP_RECIP 6
+-#define OP_STEP_MAX 7
+-#define OP_STEP_BOUND_INFO 8
++/*#define OP_STEP_MAX 7 */
++/*#define OP_STEP_BOUND_INFO 8*/
+ #define MY_TYPE 2002
+ 
+ Integer _ga_lo[MAXDIM], _ga_hi[MAXDIM], _ga_work[MAXDIM];
+@@ -1166,6 +1166,7 @@
+       }
+       NGA_Fill_patch (g_n, lo, hi, vresult);
+     }
++#if 0    
+     break;
+     case OP_STEP_MAX:
+     if (me == 0)
+@@ -1189,7 +1190,6 @@
+       aresultl = ((long)(GA_ABS(lval2)/GA_ABS(lval))) - resultl;
+     }
+     break;
+-
+     case OP_STEP_BOUND_INFO:
+     if (me == 0)
+       printf ("Testing GA_Step_bound_info...");
+@@ -1234,6 +1234,7 @@
+           GA_Error ("GA_step_bound_info wrong data type.", type);
+       }
+     }
++#endif    
+     break;
+     default:
+     GA_Error ("test_function: wrong operation.", OP);
+@@ -1443,6 +1444,7 @@
+     if (type == C_DCPL || type == C_SCPL) {
+       result = 0;
+     } else {
++#if 0      
+       if (OP == OP_STEP_MAX) {
+         /* Step_max */
+         switch (type) 
+@@ -1555,6 +1557,7 @@
+         }
+         result = result | result2 | result3;
+       }
++#endif      
+     }
+   }
+   if (me == 0)
+@@ -1620,7 +1623,7 @@
+ 
+ 
+   /* op = 8;*/
+-  for (op = 0; op < 9; op++)
++  for (op = 0; op < 7; op++)
+   {
+     /*for (d = 1; d < 2; d++)*/
+     for (d = 1; d < 4; d++)
+
