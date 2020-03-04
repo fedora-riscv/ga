@@ -3,25 +3,19 @@
 # works on other fedora and epel releases, which are supported by this software.
 # No quick Rawhide-only fixes will be allowed.
 
-%if 0%{?fedora} >= 32
-%global extra_gfortran_flags -fallow-argument-mismatch
-%else
-%global extra_gfortran_flags %{nil}
-%endif
-
 %define mpich_name mpich
 
 Name:    ga
-Version: 5.6.5
-Release: 8%{?dist}
+Version: 5.7.2
+Release: 2%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: https://github.com/GlobalArrays/ga/releases/download/v%{version}/ga-%{version}.tar.gz
 URL: http://github.com/GlobalArrays/ga
-Patch0:	ga_diag_seq.patch
+Patch0:        elempatch_test.patch
 ExclusiveArch: %{ix86} x86_64
 BuildRequires: openmpi-devel, %{mpich_name}-devel, gcc-c++, gcc-gfortran, hwloc-devel
-BuildRequires: libibverbs-devel, openblas-devel, openssh-clients, dos2unix
+BuildRequires: libibverbs-devel, openblas-devel, openssh-clients, dos2unix, automake, libtool
 
 %define ga_desc_base \
 The Global Arrays (GA) toolkit provides an efficient and portable \
@@ -105,13 +99,15 @@ Requires: openblas-devel, %{name}-common = %{version}, %{name}-openmpi = %{versi
 - Static Libraries against OpenMPI.
 %ldconfig_scriptlets openmpi
 
-%define ga_version 5.6.5
+
+%define ga_version %{version}
 
 %prep
 %setup -q -c -n %{name}-%{version}
 %patch0 -p0
 
 pushd %{name}-%{ga_version}
+
 popd
 for i in mpich openmpi; do
   cp -a %{name}-%{ga_version} %{name}-%{version}-$i
@@ -122,7 +118,6 @@ done
 %define doBuild \
 export LIBS="-lscalapack  -lopenblas -lm" ; \
 cd %{name}-%{version}-$MPI_COMPILER_NAME ; \
-export GA_FOPT='%{extra_gfortran_flags}'; \
 %configure \\\
   --bindir=$MPI_BIN \\\
   --libdir=$MPI_LIB \\\
@@ -131,7 +126,6 @@ export GA_FOPT='%{extra_gfortran_flags}'; \
   --with-blas4=-lopenblas \\\
   --enable-shared \\\
   --enable-static \\\
-  --enable-peigs \\\
   --enable-cxx \\\
   --enable-f77 \\\
   $GA_CONFIGURE_OPTIONS ; \
@@ -145,10 +139,10 @@ export GA_CONFIGURE_OPTIONS=""
 %{_mpich_unload}
 
 export MPI_COMPILER_NAME=openmpi
-export GA_CONFIGURE_OPTIONS="--with-openib"
 %{_openmpi_load}
 %doBuild
 %{_openmpi_unload}
+
 
 %install
 %define doInstall \
@@ -172,14 +166,25 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} \;
 mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/sysctl.d
 echo 'kernel.shmmax = 134217728' > $RPM_BUILD_ROOT/%{_sysconfdir}/sysctl.d/armci.conf
 dos2unix %{name}-%{ga_version}/COPYRIGHT
-
+%define do_test 1
 %check
 %if %{?do_test}0
+%if 0%{?rhel} != 6
 %{_mpich_load}
 cd %{name}-%{version}-mpich
-make check
+make NPROCS=2 VERBOSE=1 check-ma check-travis
+make NPROCS=2 TESTS="global/testing/test.x global/testing/testc.x global/testing/testmatmult.x global/testing/patch.x global/testing/simple_groups_comm.x global/testing/elempatch.x" check-TESTS VERBOSE=1
 cd ..
 %{_mpich_unload}
+%endif
+%{_openmpi_load}
+cd %{name}-%{version}-openmpi
+export OMPI_MCA_btl=^uct
+export OMPI_MCA_btl_base_warn_component_unused=0
+make NPROCS=2 VERBOSE=1 check-ma check-travis
+make NPROCS=2 TESTS="global/testing/test.x global/testing/testc.x global/testing/testmatmult.x global/testing/patch.x global/testing/simple_groups_comm.x global/testing/elempatch.x" check-TESTS VERBOSE=1
+cd ..
+%{_openmpi_unload}
 %endif
 
 %files common
@@ -212,16 +217,40 @@ cd ..
 %{_includedir}/openmpi-%{_arch}/*
 %{_libdir}/openmpi/bin/ga-config
 %{_libdir}/openmpi/bin/armci-config
+%{_libdir}/openmpi/bin/comex-config
 %files openmpi-static
 %doc %{name}-%{ga_version}/COPYRIGHT
 %{_libdir}/openmpi/lib/lib*.a
 
 %changelog
+* Tue Mar 03 2020 Edoardo Apra <edoardo.apra@gmail.com> - 5.7.2-2
+- work-around for openmpi 4.0.1 segfault
+- perform small number of tests with NPROC=2
+
+* Fri Feb 28 2020 Edoardo Apra <edoardo.apra@gmail.com> - 5.7.2-1
+- Release 5.7.2 from https://github.com/GlobalArrays/ga/
+
+* Mon Feb 17 2020 Edoardo Apra <edoardo.apra@gmail.com> - 5.7.1-1
+- Release 5.7.1
+- enabled tests
+- removed ga-openmpi-pr RPMs
+
 * Fri Feb 14 2020 Marcin Dulak <Marcin.Dulak@gmail.com> - 5.6.5-8
 - -fallow-argument-mismatch fix for gfortran 10
 
 * Tue Jan 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 5.6.5-7
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
+
+* Wed Oct 02 2019 Edoardo Apra <edoardo.apra@gmail.com> - 5.7-1.1
+- added ga-openmpi-pr RPMs built with NETWORK=MPI-PR
+
+* Tue Oct 01 2019 Edoardo Apra <edoardo.apra@gmail.com> - 5.7-1
+- Release 5.7
+- removed openib target
+- fix for MKL error "PDSTEDC parameter number 10 had an illegal value"
+- fix for MPI-2 deprecated MPI_Type_struct and MPI_Errhandler_set
+- added NOUSE_MMAP config.h option for 32bit linux
+- fix for pgcc configure error
 
 * Thu Jul 25 2019 Fedora Release Engineering <releng@fedoraproject.org> - 5.6.5-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
