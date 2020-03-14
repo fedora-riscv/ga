@@ -1,0 +1,26 @@
+diff --git ga-5.7.2/configure.ac ga-5.7.2/configure.ac
+index 8ac89182..25d21999 100644
+--- ga-5.7.2/configure.ac
++++ ga-5.7.2/configure.ac
+@@ -40,7 +40,7 @@ AC_SUBST([PACKAGE_VERSION])
+ # ga version 5.7.1: 2:1:1
+ #
+ # libga -version-info current:revision:age
+-LTVER="2:1:1"
++LTVER="2:2:1"
+ AC_SUBST([LTVER])
+ 
+ ###############################################################################
+diff --git ga-5.7.2/global/src/gacommon.h ga-5.7.2/global/src/gacommon.h
+index 21180d4f..4b4401d4 100644
+--- ga-5.7.2/global/src/gacommon.h
++++ ga-5.7.2/global/src/gacommon.h
+@@ -7,7 +7,7 @@
+ 
+ #define GA_VERSION_MAJOR 5
+ #define GA_VERSION_MINOR 7
+-#define GA_VERSION_PATCH 1
++#define GA_VERSION_PATCH 2
+ 
+ #define C_CHAR     MT_C_CHAR
+ #define C_DBL      MT_C_DBL

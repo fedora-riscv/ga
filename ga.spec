@@ -7,15 +7,17 @@
 
 Name:    ga
 Version: 5.7.2
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: https://github.com/GlobalArrays/ga/releases/download/v%{version}/ga-%{version}.tar.gz
 URL: http://github.com/GlobalArrays/ga
 Patch0:        elempatch_test.patch
-ExclusiveArch: %{ix86} x86_64
-BuildRequires: openmpi-devel, %{mpich_name}-devel, gcc-c++, gcc-gfortran, hwloc-devel
-BuildRequires: libibverbs-devel, openblas-devel, openssh-clients, dos2unix, automake, libtool
+Patch1:        ga572_version.patch
+Patch2:        dereferencing_fix.patch
+ExclusiveArch: %{ix86} x86_64 %{arm} aarch64 ppc64le 
+BuildRequires: openmpi-devel, %{mpich_name}-devel, gcc-c++, gcc-gfortran
+BuildRequires: openblas-devel, openssh-clients, dos2unix
 
 %define ga_desc_base \
 The Global Arrays (GA) toolkit provides an efficient and portable \
@@ -45,7 +47,7 @@ BuildArch: noarch
 %package mpich
 Summary: Global Arrays Toolkit for MPICH
 BuildRequires: scalapack-%{mpich_name}-devel
-BuildRequires: lapack-devel
+BuildRequires: openblas-devel
 Requires: %{name}-common = %{version}
 Provides: %{name}-mpich2 = %{version}-%{release}
 Obsoletes: %{name}-mpich2 < %{version}-%{release}
@@ -55,7 +57,6 @@ Obsoletes: %{name}-mpich2 < %{version}-%{release}
 %package mpich-devel
 Summary: Global Arrays Toolkit for MPICH Development
 Requires: scalapack-%{mpich_name}-devel, %{mpich_name}-devel
-Requires: lapack-devel
 Requires: openblas-devel, %{name}-common = %{version}, %{name}-mpich = %{version}
 Provides: %{name}-mpich2-devel = %{version}-%{release}
 Obsoletes: %{name}-mpich2-devel < %{version}-%{release}
@@ -65,7 +66,6 @@ Obsoletes: %{name}-mpich2-devel < %{version}-%{release}
 %package mpich-static
 Summary: Global Arrays Toolkit for MPICH Static Libraries
 Requires: scalapack-%{mpich_name}-devel, %{mpich_name}-devel
-Requires: lapack-devel
 Requires: openblas-devel, %{name}-common = %{version}, %{name}-mpich = %{version}
 Provides: %{name}-mpich2-static = %{version}-%{release}
 Obsoletes: %{name}-mpich2-static < %{version}-%{release}
@@ -77,7 +77,7 @@ Obsoletes: %{name}-mpich2-static < %{version}-%{release}
 %package openmpi
 Summary: Global Arrays Toolkit for OpenMPI
 BuildRequires: scalapack-openmpi-devel
-BuildRequires: lapack-devel
+BuildRequires: openblas-devel
 Requires: %{name}-common = %{version}
 %description openmpi
 %{ga_desc_base}
@@ -85,7 +85,6 @@ Requires: %{name}-common = %{version}
 %package openmpi-devel
 Summary: Global Arrays Toolkit for OpenMPI Development
 Requires: scalapack-openmpi-devel, openmpi-devel
-Requires: lapack-devel
 Requires: openblas-devel, %{name}-common = %{version}, %{name}-openmpi = %{version}
 %description openmpi-devel
 %{ga_desc_base}
@@ -105,6 +104,8 @@ Requires: openblas-devel, %{name}-common = %{version}, %{name}-openmpi = %{versi
 %prep
 %setup -q -c -n %{name}-%{version}
 %patch0 -p0
+%patch1 -p0
+%patch2 -p0
 
 pushd %{name}-%{ga_version}
 
@@ -116,7 +117,7 @@ done
 
 
 %define doBuild \
-export LIBS="-lscalapack  -lopenblas -lm" ; \
+export LIBS="-lscalapack  -lopenblas" ; \
 cd %{name}-%{version}-$MPI_COMPILER_NAME ; \
 %configure \\\
   --bindir=$MPI_BIN \\\
@@ -223,6 +224,10 @@ cd ..
 %{_libdir}/openmpi/lib/lib*.a
 
 %changelog
+* Thu Mar 05 2020 Edoardo Apra <edoardo.apra@gmail.com> - 5.7.2-3
+- fixed 5.7.2 version
+- fixed dereferencing type-punned pointer warning
+
 * Tue Mar 03 2020 Edoardo Apra <edoardo.apra@gmail.com> - 5.7.2-2
 - work-around for openmpi 4.0.1 segfault
 - perform small number of tests with NPROC=2
