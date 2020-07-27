@@ -7,7 +7,7 @@
 
 Name:    ga
 Version: 5.7.2
-Release: 3%{?dist}
+Release: 4%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: https://github.com/GlobalArrays/ga/releases/download/v%{version}/ga-%{version}.tar.gz
@@ -224,6 +224,9 @@ cd ..
 %{_libdir}/openmpi/lib/lib*.a
 
 %changelog
+* Mon Jul 27 2020 Fedora Release Engineering <releng@fedoraproject.org> - 5.7.2-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
+
 * Thu Mar 05 2020 Edoardo Apra <edoardo.apra@gmail.com> - 5.7.2-3
 - fixed 5.7.2 version
 - fixed dereferencing type-punned pointer warning
