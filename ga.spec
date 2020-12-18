@@ -84,6 +84,7 @@ Obsoletes: %{name}-mpich2-static < %{version}-%{release}
 Summary: Global Arrays Toolkit for OpenMPI
 BuildRequires: scalapack-openmpi-devel
 BuildRequires: %{blaslib}-devel
+BuildRequires: make
 Requires: %{name}-common = %{version}
 %description openmpi
 %{ga_desc_base}
