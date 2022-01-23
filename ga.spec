@@ -13,7 +13,7 @@
 
 Name:    ga
 Version: 5.7.2
-Release: 8%{?dist}
+Release: 9%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: https://github.com/GlobalArrays/ga/releases/download/v%{version}/ga-%{version}.tar.gz
@@ -122,7 +122,7 @@ for i in mpich openmpi; do
 done
 
 
-
+%build
 %define doBuild \
 export LIBS="-lscalapack -l%{blaslib}" ; \
 cd %{name}-%{version}-$MPI_COMPILER_NAME ; \
@@ -231,6 +231,9 @@ cd ..
 %{_libdir}/openmpi/lib/lib*.a
 
 %changelog
+* Sun Jan 23 2022 Marcin Dulak <marcindulak@fedoraproject.org> - 5.7.2-9
+- Run configure in the build section, bug #2044028
+
 * Thu Jan 20 2022 Fedora Release Engineering <releng@fedoraproject.org> - 5.7.2-8
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
 
@@ -262,7 +265,7 @@ cd ..
 - enabled tests
 - removed ga-openmpi-pr RPMs
 
-* Fri Feb 14 2020 Marcin Dulak <Marcin.Dulak@gmail.com> - 5.6.5-8
+* Fri Feb 14 2020 Marcin Dulak <marcindulak@fedoraproject.org> - 5.6.5-8
 - -fallow-argument-mismatch fix for gfortran 10
 
 * Tue Jan 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 5.6.5-7
