@@ -125,6 +125,9 @@ done
 %build
 %define doBuild \
 export LIBS="-lscalapack -l%{blaslib}" ; \
+export CFLAGS="%{optflags} -O1" ; \
+export CXXFLAGS="%{optflags} -O1" ; \
+export FFLAGS="%{optflags} -O1" ; \
 cd %{name}-%{version}-$MPI_COMPILER_NAME ; \
 %configure \\\
   --bindir=$MPI_BIN \\\
@@ -233,6 +236,7 @@ cd ..
 %changelog
 * Sun Jan 23 2022 Marcin Dulak <marcindulak@fedoraproject.org> - 5.7.2-9
 - Run configure in the build section, bug #2044028
+- Reduce the optimization to -O1, bug #2045402
 
 * Thu Jan 20 2022 Fedora Release Engineering <releng@fedoraproject.org> - 5.7.2-8
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
