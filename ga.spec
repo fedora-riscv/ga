@@ -13,7 +13,7 @@
 
 Name:    ga
 Version: 5.7.2
-Release: 9%{?dist}
+Release: 10%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: https://github.com/GlobalArrays/ga/releases/download/v%{version}/ga-%{version}.tar.gz
@@ -234,6 +234,9 @@ cd ..
 %{_libdir}/openmpi/lib/lib*.a
 
 %changelog
+* Thu Jul 21 2022 Fedora Release Engineering <releng@fedoraproject.org> - 5.7.2-10
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_37_Mass_Rebuild
+
 * Sun Jan 23 2022 Marcin Dulak <marcindulak@fedoraproject.org> - 5.7.2-9
 - Run configure in the build section, bug #2044028
 - Reduce the optimization to -O1, bug #2045402
