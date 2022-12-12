@@ -1,3 +1,9 @@
+commit b444960c8c993f3f5c51acf37451e418e819d007
+Author: edoapra <edoardo.apra@gmail.com>
+Date:   Fri Oct 9 15:16:04 2020 -0700
+
+    more fixes for clang from Xcode 12
+
 diff --git comex/src-common/acc.h comex/src-common/acc.h
 index 3ef9884d..4d343384 100644
 --- ga-5.7.2/comex/src-common/acc.h
