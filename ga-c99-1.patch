@@ -1,0 +1,32 @@
+Fixed essentially the same way upstream via:
+
+commit 3df34834189ba45a090f1dcba7d71d23f7b11735
+Author: edoapra <edoardo.apra@gmail.com>
+Date:   Fri Oct 9 13:36:42 2020 -0700
+
+    fix for clang from Xcode 12
+
+diff -up ga-5.7.2/configure.c99 ga-5.7.2/configure
+--- ga-5.7.2/configure.c99	2022-12-12 08:23:27.806493737 +0100
++++ ga-5.7.2/configure	2022-12-12 08:24:00.978163147 +0100
+@@ -23022,6 +23022,8 @@ void fix_f_string_for_c(char *s, int len
+     }
+ }
+ 
++void $FSUB(void);
++
+ int main(int argc, char **argv)
+ {
+     $FSUB();
+diff -up ga-5.7.2/m4/ga_f2c_string.m4.c99 ga-5.7.2/m4/ga_f2c_string.m4
+--- ga-5.7.2/m4/ga_f2c_string.m4.c99	2022-12-12 08:23:44.230330055 +0100
++++ ga-5.7.2/m4/ga_f2c_string.m4	2022-12-12 08:24:06.457108545 +0100
+@@ -51,6 +51,8 @@ void fix_f_string_for_c(char *s, int len
+     }
+ }
+ 
++void $FSUB(void);
++
+ int main(int argc, char **argv)
+ {
+     $FSUB();
