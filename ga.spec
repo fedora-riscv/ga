@@ -18,12 +18,12 @@ ExcludeArch: %{ix86}
 
 Name:    ga
 Version: 5.8.2
-Release: 5%{?dist}
+Release: 6%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: https://github.com/GlobalArrays/ga/releases/download/v%{version}/ga-%{version}.tar.gz
 URL: http://github.com/GlobalArrays/ga
-ExclusiveArch: %{ix86} x86_64 %{arm} aarch64 ppc64le 
+ExclusiveArch: %{ix86} x86_64 %{arm} aarch64 ppc64le riscv64
 BuildRequires: openmpi-devel, %{mpich_name}-devel, gcc-c++, gcc-gfortran
 BuildRequires: %{blaslib}-devel, openssh-clients, dos2unix
 
@@ -232,6 +232,9 @@ cd ..
 %{_libdir}/openmpi/lib/lib*.a
 
 %changelog
+* Thu Apr 11 2024 Jiasheng Zhao <JasenChao@gmail.com> - 5.8.2-6
+- Add riscv64 support
+
 * Wed Jan 24 2024 Fedora Release Engineering <releng@fedoraproject.org> - 5.8.2-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_40_Mass_Rebuild
 
