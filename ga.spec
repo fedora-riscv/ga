@@ -18,12 +18,12 @@ ExcludeArch: %{ix86}
 
 Name:    ga
 Version: 5.8.2
-Release: 5%{?dist}
+Release: 5.rv64%{?dist}
 Summary: Global Arrays Toolkit
 License: BSD
 Source: https://github.com/GlobalArrays/ga/releases/download/v%{version}/ga-%{version}.tar.gz
 URL: http://github.com/GlobalArrays/ga
-ExclusiveArch: %{ix86} x86_64 %{arm} aarch64 ppc64le 
+ExclusiveArch: %{ix86} x86_64 %{arm} aarch64 ppc64le riscv64
 BuildRequires: openmpi-devel, %{mpich_name}-devel, gcc-c++, gcc-gfortran
 BuildRequires: %{blaslib}-devel, openssh-clients, dos2unix
 
